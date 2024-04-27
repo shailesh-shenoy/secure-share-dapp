@@ -11,22 +11,6 @@ const config: HardhatUserConfig = {
     hardhat: {
       loggingEnabled: false,
     },
-    ethereum: {
-      chainId: 1,
-      url: "https://eth.public-rpc.com",
-      forking: {
-        url: "https://eth.public-rpc.com",
-      },
-      accounts: [process.env.PRIVATE_KEY_DEPLOYER as string],
-    },
-    goerli: {
-      chainId: 5,
-      url: "https://ethereum-goerli.publicnode.com",
-      forking: {
-        url: "https://ethereum-goerli.publicnode.com",
-      },
-      accounts: [process.env.PRIVATE_KEY_DEPLOYER as string],
-    },
     polygonAmoy: {
       chainId: 80002,
       url: process.env.ALCHEMY_API_URL as string,
