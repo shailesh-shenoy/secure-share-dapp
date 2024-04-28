@@ -68,6 +68,16 @@ function ConsumerPage() {
     return <div>Loading...</div>;
   }
 
+  const parseMessage = async () => {
+    if (!encryptedData) return;
+    const data = JSON.parse(encryptedData);
+    setEMedicalRecords(data.medicalRecords);
+    setEFinancialRecords(data.financialRecords);
+    setEDnrRecords(data.dnrRecords);
+    setEGenomicRecords(data.genomicRecords);
+    setEMyDID(data.myDID);
+  };
+
   const decryptMessage = async () => {
     if (!encryptedData || !provider) return;
     try {
@@ -98,14 +108,16 @@ function ConsumerPage() {
           onChange={handleEncryptedDataChange}
         />
       </InputGroup>
-      <Button onClick={decryptMessage}>Decrypt</Button>{" "}
+      <Button onClick={parseMessage}>Decrypt</Button>{" "}
       {decrypting && "Encrypting..."}
-      <Heading as="h3">Decrypted message: </Heading>
-      <Input
-        placeholder="Decrypted medical records"
-        value={decryptedMessage}
-        readOnly
-      />
+      <InputGroup>
+        <Heading as="h3">Decrypted message: </Heading>
+        <Input
+          placeholder="Decrypted medical records"
+          value={decryptedMessage}
+          readOnly
+        />
+      </InputGroup>
     </Stack>
   );
 }
