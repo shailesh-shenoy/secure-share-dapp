@@ -9,7 +9,7 @@ import JsonView from 'react18-json-view'
 import 'react18-json-view/src/style.css'
 
 import useTaco from "../hooks/useTaco";
-import { Button, Heading, Input, InputGroup, Stack, StackDivider, Text, Textarea } from "@chakra-ui/react";
+import { Button, Heading, Input, InputGroup, Stack, StackDivider, Text, Textarea, useToast } from "@chakra-ui/react";
 
 declare const window: any;
 
@@ -33,6 +33,8 @@ function ConsumerPage() {
   const [decryptedDnrRecords, setDecryptedDnrRecords] = useState<string | undefined>("");
   const [decryptedGenomicRecords, setDecryptedGenomicRecords] = useState<string | undefined>("");
   const [decryptedMyDID, setDecryptedMyDID] = useState<string | undefined>("");
+
+  const toast = useToast();
 
   const handleEncryptedDataChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -99,10 +101,24 @@ function ConsumerPage() {
       );
       console.log("Decrypted message:", fromBytes(decryptedMessage!));
       if (decryptedMessage) {
+        toast({
+          title: "Data decrypted successfully",
+          description: "Data has been decrypted successfully",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
         return fromBytes(decryptedMessage);
       }
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
+      toast({
+        title: "Failed to decrypt data",
+        description: "Access denied: " + e?.message?.substring(0, 100),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
     setDecrypting(false);
   };
@@ -155,10 +171,10 @@ function ConsumerPage() {
           readOnly
         />
         <Button onClick={decryptMedicalRecords}>Decrypt Medical Records</Button>
-        <Textarea
-          placeholder="Decrypted Medical Records"
-          value={decryptedMedicalRecords}
-          readOnly />
+        <Text >Decrypted Medical Records: </Text>
+        {
+          !decryptedMedicalRecords || decryptedMedicalRecords === "" ? "" : <JsonView src={JSON.parse(decryptedMedicalRecords)} collapsed />
+        }
       </Stack>
 
       <Stack>
@@ -171,10 +187,10 @@ function ConsumerPage() {
         <Button
           onClick={decryptFinancialRecords}
         >Decrypt Financial Records</Button>
-        <Textarea
-          placeholder="Decrypted Financial Records"
-          value={decryptedFinancialRecords}
-          readOnly />
+        <Text >Decrypted Financial Records: </Text>
+        {
+          !decryptedFinancialRecords || decryptedFinancialRecords === "" ? "" : <JsonView src={JSON.parse(decryptedFinancialRecords)} collapsed />
+        }
       </Stack>
 
       <Stack>
@@ -187,10 +203,10 @@ function ConsumerPage() {
         <Button
           onClick={decryptDnrRecords}
         >Decrypt DNR Records</Button>
-        <Textarea
-          placeholder="Decrypted DNR Records"
-          value={decryptedDnrRecords}
-          readOnly />
+        <Text >Decrypted DNR Records: </Text>
+        {
+          !decryptedDnrRecords || decryptedDnrRecords === "" ? "" : <JsonView src={JSON.parse(decryptedDnrRecords)} collapsed />
+        }
       </Stack>
 
       <Stack>
@@ -203,10 +219,10 @@ function ConsumerPage() {
         <Button
           onClick={decryptGenomicRecords}
         >Decrypt Genomic Records</Button>
-        <Textarea
-          placeholder="Decrypted Genomic Records"
-          value={decryptedGenomicRecords}
-          readOnly />
+        <Text >Decrypted Genomic Records: </Text>
+        {
+          !decryptedGenomicRecords || decryptedGenomicRecords === "" ? "" : <JsonView src={JSON.parse(decryptedGenomicRecords)} collapsed />
+        }
       </Stack>
 
       <Stack>
@@ -219,10 +235,10 @@ function ConsumerPage() {
         <Button
           onClick={decryptMyDID}
         >Decrypt De-Identified Records</Button>
-        <Textarea
-          placeholder="Decrypted MyDID"
-          value={decryptedMyDID}
-          readOnly />
+        <Text >Decrypted De-Identified Records: </Text>
+        {
+          !decryptedMyDID || decryptedMyDID === "" ? "" : <JsonView src={JSON.parse(decryptedMyDID)} collapsed />
+        }
       </Stack>
     </Stack>
   );
