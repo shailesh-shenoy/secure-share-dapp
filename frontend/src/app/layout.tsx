@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Flex direction="column" minHeight="100vh">
+          <Flex direction="column" minHeight="100vh" bg="purple.50">
             <Navbar />
             {children}
             <Footer />

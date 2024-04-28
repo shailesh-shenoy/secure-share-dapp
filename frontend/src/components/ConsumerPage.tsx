@@ -174,14 +174,18 @@ function ConsumerPage() {
   };
 
   return (
-    <Stack as="section" spacing={8} divider={<StackDivider borderColor="gray.400" />}>
+    <Stack as="section" spacing={8} bg="white" boxShadow={"2xl"}
+      border="1px solid"
+      p={8}
+      borderColor="gray.300"
+      borderRadius={16} mt={8}
+      divider={<StackDivider borderColor="gray.400" />}>
 
       <Heading as="h2">Consume Data</Heading>
-      <InputGroup as={Stack}>
-
+      <Stack spacing={4}>
         <Text>Enter DATA URL</Text>
         <Input placeholder="Data URL" value={ipfsUrl} onChange={handleIpfsUrlChange} />
-        <Button onClick={parseMessage} isDisabled={ipfsUrl?.length <= 0}>Process data</Button>
+        <Button w={300} colorScheme="purple" onClick={parseMessage} isDisabled={ipfsUrl?.length <= 0} >Process data</Button>
 
         <Text>Encrypted Data:</Text>
         <Textarea
@@ -189,7 +193,7 @@ function ConsumerPage() {
           value={encryptedData}
           readOnly
         />
-      </InputGroup>
+      </Stack>
 
 
       <Stack>
@@ -199,7 +203,7 @@ function ConsumerPage() {
           value={eMedicalRecords}
           readOnly
         />
-        <Button onClick={decryptMedicalRecords}>Decrypt Medical Records</Button>
+        <Button w={300} colorScheme="purple" onClick={decryptMedicalRecords}>Decrypt Medical Records</Button>
         <Text >Decrypted Medical Records: </Text>
         {
           !decryptedMedicalRecords || decryptedMedicalRecords === "" ? "" : <JsonView src={JSON.parse(decryptedMedicalRecords)} collapsed />
@@ -214,6 +218,7 @@ function ConsumerPage() {
           readOnly
         />
         <Button
+          w={300} colorScheme="purple"
           onClick={decryptFinancialRecords}
         >Decrypt Financial Records</Button>
         <Text >Decrypted Financial Records: </Text>
@@ -230,6 +235,7 @@ function ConsumerPage() {
           readOnly
         />
         <Button
+          w={300} colorScheme="purple"
           onClick={decryptDnrRecords}
         >Decrypt DNR Records</Button>
         <Text >Decrypted DNR Records: </Text>
@@ -246,6 +252,7 @@ function ConsumerPage() {
           readOnly
         />
         <Button
+          w={300} colorScheme="purple"
           onClick={decryptGenomicRecords}
         >Decrypt Genomic Records</Button>
         <Text >Decrypted Genomic Records: </Text>
@@ -262,6 +269,7 @@ function ConsumerPage() {
           readOnly
         />
         <Button
+          w={300} colorScheme="purple"
           onClick={decryptMyDID}
         >Decrypt De-Identified Records</Button>
         <Text >Decrypted De-Identified Records: </Text>

@@ -231,9 +231,14 @@ function CitizenPage() {
   };
 
   return (
-    <Stack as="section" spacing={5} divider={<StackDivider color="gray.200" />}>
+    <Stack as="section" spacing={8} bg="white" boxShadow={"2xl"}
+      border="1px solid"
+      p={8}
+      borderColor="gray.300"
+      borderRadius={16} mt={8}
+      divider={<StackDivider borderColor="gray.400" />}>
       <Heading as="h2">Citizen Data</Heading>
-      <Flex flexDirection="column">
+      <Stack spacing={4}>
         <Text fontWeight={600}>Medical Records: </Text>
         <Box as="label"
           display="inline-block"
@@ -258,8 +263,8 @@ function CitizenPage() {
         {
           medicalRecords === "" ? "" : <JsonView src={JSON.parse(medicalRecords)} collapsed />
         }
-      </Flex>
-      <Flex flexDirection="column">
+      </Stack>
+      <Stack spacing={4}>
         <Text fontWeight={600}>Financial Records: </Text>
         <Box as="label"
           display="inline-block"
@@ -284,9 +289,9 @@ function CitizenPage() {
         {
           financialRecords === "" ? "" : <JsonView src={JSON.parse(financialRecords)} collapsed />
         }
-      </Flex>
+      </Stack>
 
-      <Flex flexDirection="column">
+      <Stack spacing={4}>
         <Text fontWeight={600}>DNR Records: </Text>
         <Box as="label"
           display="inline-block"
@@ -311,9 +316,9 @@ function CitizenPage() {
         {
           dnrRecords === "" ? "" : <JsonView src={JSON.parse(dnrRecords)} collapsed />
         }
-      </Flex>
+      </Stack>
 
-      <Flex flexDirection="column">
+      <Stack spacing={4}>
         <Text fontWeight={600}>Genomic Records: </Text>
         <Box as="label"
           display="inline-block"
@@ -338,9 +343,9 @@ function CitizenPage() {
         {
           genomicRecords === "" ? "" : <JsonView src={JSON.parse(genomicRecords)} collapsed />
         }
-      </Flex>
+      </Stack>
 
-      <Flex flexDirection="column">
+      <Stack spacing={4}>
         <Text fontWeight={600}>My De-Identified Records: </Text>
         <Box as="label"
           display="inline-block"
@@ -366,21 +371,21 @@ function CitizenPage() {
           myDID === "" ? "" : <JsonView src={JSON.parse(myDID)} collapsed />
         }
 
-      </Flex>
+      </Stack>
 
-      <Button onClick={encryptMessage}>Encrypt</Button>{" "}
+      <Button w={300} colorScheme="purple" onClick={encryptMessage}>Encrypt</Button>{" "}
       {encrypting && "Encrypting..."}
-      <Heading as="h3">Encrypted message: </Heading>
+      <Heading as="h3">Encrypted message</Heading>
       {
         encryptedData && <JsonView src={JSON.parse(encryptedData)} collapsed />
       }
 
-      <Flex flexDirection="column">
+      <Stack spacing={4}>
         <Text fontWeight={600}>IPFS Hash: </Text>
         <Input value={ipfsHash} readOnly />
         <Text fontWeight={600}>IPFS URL: </Text>
         <Input value={ipfsUrl} readOnly />
-      </Flex>
+      </Stack>
     </Stack>
   );
 }

@@ -6,7 +6,7 @@ import React from "react";
 
 export default function consumer() {
   return (
-    <Container as="main" p={2}>
+    <Container maxW="7xl" as="main" p={2}>
       <ConsumerPage />
     </Container>
   );

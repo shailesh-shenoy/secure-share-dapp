@@ -21,6 +21,7 @@ export default function SplitScreen() {
             <Text
               as={'span'}
               position={'relative'}
+              zIndex={1}
               _after={{
                 content: "''",
                 width: 'full',
@@ -38,7 +39,7 @@ export default function SplitScreen() {
               Share
             </Text>{' '}
           </Heading>
-          <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
+          <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.700'}>
             Encrypt, store, & share sensitive data with strict access-control guardrails usiing trust-minimized technologies.
           </Text>
           <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
@@ -52,7 +53,8 @@ export default function SplitScreen() {
               }}>
               Secure my data
             </Button>
-            <Button rounded={'full'} as={NextLink} href="/consumer" variant="ghost" colorScheme='purple'>Access encrypted data</Button>
+            <Button rounded={'full'} as={NextLink} href="/consumer" variant="ghost" colorScheme='purple' _hover={{ bg: 'purple.100' }}
+            >Access encrypted data</Button>
           </Stack>
         </Stack>
       </Flex>

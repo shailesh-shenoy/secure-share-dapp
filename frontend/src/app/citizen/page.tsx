@@ -6,7 +6,7 @@ import { Container, Spinner } from "@chakra-ui/react";
 
 export default function Citizen() {
   return (
-    <Container as="main" p={2}>
+    <Container maxW="7xl" as="main" p={2}>
       <CitizenPage />
     </Container>
   );
