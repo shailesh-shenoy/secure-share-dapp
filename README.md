@@ -3,16 +3,14 @@
 ## My Boston Secure Social Share is a multi-dimensional user-friendly social app for securely for citizens to share sensitive data.
 
 ## Problem statement(s): Amidst all the advances in blockchain tech, One sore spot that still remains a sore spot is adoption. 
-## There has been a clear need to improve UI/UX of web 3 systems, particularly as close as possible (or) better than the web2 systems users are accustomed to 
-## in terms of UI simplicity , flexibility, cost to user, latency etc. However, an equivalently important issue is that most usecases were chain-native and 
-## financially oriented. 
+## There has been a clear need to improve UI/UX of web 3 systems, particularly as close as possible (or) better than the web2 systems users are accustomed ## to in terms of UI simplicity , flexibility, cost to user, latency etc. However, an equivalently important issue is that most usecases were chain-native ## and financially oriented. 
 
-## If we have to on-board the next billion users, improving the UI/UX and aspects of scalabiltiy are important but will NOT be enough, but the issues of privacy, complying to data protection rules, and data security, de-identification and re-identification issues are important. These issues, actually cuts accross many industries including finance, commerce, healthcare, energy and has intricate social behavior at the communiity level. 
+## If we have to on-board the next billion users, improving the UI/UX and aspects of scalabiltiy are important but  will NOT be enough, but the issues of ##privacy, complying to data protection rules, and data security, de-identification and re-identification issues are important. These issues, actually cuts ## accross many industries including finance, commerce, healthcare, energy and has intricate social behavior at the community level, and effective and effective every transactions in society.
 
-## More ##importantly the wider adoption of blockchain tech only can happen, if the use-cases span accross every day usecases at the societial interactions , ## at a cross-cutting ## level. For example, the recent issues has been Boston has been around housing crisis, opoid issues. loneliness( lack of societial ##support ) that are also benchmarked as social determinants of health with specific efforts to combat them. Similarly, the issues Emergency teams run in to ##when there are difficult cases that need R/DNR decisions etc., in the absense of complete picture of advanced directives.
+## More ##importantly the wider adoption of blockchain tech only can happen, if the use-cases span accross every day usecases at the societial interactions at a ##cross-cutting ## level. For example, the recent issues has been Boston has been around housing crisis, opoid issues. loneliness( lack of societial support ) ##that are also benchmarked as social determinants of health with specific efforts to combat them. Similarly, the issues Emergency teams run in to when there are ##difficult cases that need R/DNR decisions etc., in the absense of complete picture of advanced directives.
 ## Another big issue has been compromise of medical data.
 
-## What we need in web3 decentralized movements is a UI/UX that is flexible, cost effective and that can hold different types of assets that can be integrated in to everyday societial issues. That led to the idea of MyBostonSocialShare
+## What we need in web3 decentralized movements is a UI/UX that is flexible, cost effective and that can hold different types of assets that can be ##integrated ##in to everyday societial issues. That led to the idea of MyBostonSocialShare
  
 ## Primary objectives of My Boston Social Share
 
