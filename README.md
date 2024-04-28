@@ -1,6 +1,6 @@
-## My Boston Social Share
+## Secure Social Share
 
-## My Boston Social Share is a multi-dimensional user-friendly social app for securely for citizens to share sensitive data.
+## My Boston Secure Social Share is a multi-dimensional user-friendly social app for securely for citizens to share sensitive data.
 
 ## Problem statement(s): Amidst all the advances in blockchain tech, One sore spot that still remains a sore spot is adoption. 
 ## There has been a clear need to improve UI/UX of web 3 systems, particularly as close as possible (or) better than the web2 systems users are accustomed to 
