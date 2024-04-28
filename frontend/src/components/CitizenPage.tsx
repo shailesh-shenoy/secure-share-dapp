@@ -109,7 +109,7 @@ function CitizenPage() {
 
       console.log("Encrypting message...");
       const encryptedBytes = await encryptDataToBytes(
-        medicalRecords,
+        record,
         hasPositiveBalance,
         signer
       );
