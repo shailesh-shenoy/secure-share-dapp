@@ -39,6 +39,14 @@ We build the project with the following components
 6. The intutive UI , shows both the persepecive of the data prodcuer and the data utilizer in a simpler way to explain the secure sharing of data accross societal roles.
 
 
+## The UI is available at 
+
+https://www.youtube.com/watch?v=Yq1_JtYc96Q
+
+## The presentation is available at 
+
+https://www.github.com/shailesh-shenoy/secure-share-dapp/edit/main/SecureSocialShare.pptx
+
 
 
 
