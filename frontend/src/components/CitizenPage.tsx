@@ -23,6 +23,7 @@ import {
   StackDivider,
   Text,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import FileDataViewer from "./FileDataViewer";
 import JsonView from "react18-json-view";
@@ -46,6 +47,10 @@ function CitizenPage() {
   const [myDID, setMyDID] = useState("");
   const [encrypting, setEncrypting] = useState(false);
   const [encryptedData, setEncryptedData] = useState<string | undefined>("");
+  const [ipfsHash, setIpfsHash] = useState<string | undefined>("");
+  const [ipfsUrl, setIpfsUrl] = useState<string | undefined>("");
+
+  const toast = useToast();
 
   const loadWeb3Provider = async () => {
     if (!window.ethereum) {
@@ -132,6 +137,48 @@ function CitizenPage() {
       myDID: eDidData,
     };
     setEncryptedData(JSON.stringify(edata));
+    toast({
+      title: "Data Encrypted",
+      description: "Data has been encrypted successfully",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
+
+    // Send data to "upload" API route, to upload to IPFS
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(edata),
+    });
+
+    if (response.ok) {
+      const { ipfsHash, ipfsUrl } = await response.json();
+      console.log("IPFS hash:", ipfsHash);
+      console.log("IPFS URL:", ipfsUrl);
+      setIpfsHash(ipfsHash);
+      setIpfsUrl(ipfsUrl);
+      toast({
+        title: "Data uploaded to IPFS",
+        description: "Data has been uploaded to IPFS successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      console.error("Failed to upload data to IPFS");
+      toast({
+        title: "Failed to upload data to IPFS",
+        description: "Failed to upload data to IPFS",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+
   };
 
   const encryptRecord = async (record: string, recordType: string) => {
@@ -327,6 +374,13 @@ function CitizenPage() {
       {
         encryptedData && <JsonView src={JSON.parse(encryptedData)} collapsed />
       }
+
+      <Flex flexDirection="column">
+        <Text fontWeight={600}>IPFS Hash: </Text>
+        <Input value={ipfsHash} readOnly />
+        <Text fontWeight={600}>IPFS URL: </Text>
+        <Input value={ipfsUrl} readOnly />
+      </Flex>
     </Stack>
   );
 }

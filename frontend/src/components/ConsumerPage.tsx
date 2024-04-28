@@ -27,6 +27,7 @@ function ConsumerPage() {
   const [eGenomicRecords, setEGenomicRecords] = useState<string | undefined>("");
   const [eMyDID, setEMyDID] = useState<string | undefined>("");
   const [decrypting, setDecrypting] = useState<boolean>(false);
+  const [ipfsUrl, setIpfsUrl] = useState<string>("");
 
   const [decryptedMedicalRecords, setDecryptedMedicalRecords] = useState<string | undefined>("");
   const [decryptedFinancialRecords, setDecryptedFinancialRecords] = useState<string | undefined>("");
@@ -36,10 +37,10 @@ function ConsumerPage() {
 
   const toast = useToast();
 
-  const handleEncryptedDataChange = (
+  const handleIpfsUrlChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setEncryptedData(e.target.value);
+    setIpfsUrl(e.target.value);
   };
 
   const loadWeb3Provider = async () => {
@@ -77,13 +78,37 @@ function ConsumerPage() {
   }
 
   const parseMessage = async () => {
-    if (!encryptedData) return;
-    const data = JSON.parse(encryptedData);
-    setEMedicalRecords(data.medicalRecords);
-    setEFinancialRecords(data.financialRecords);
-    setEDnrRecords(data.dnrRecords);
-    setEGenomicRecords(data.genomicRecords);
-    setEMyDID(data.myDID);
+    if (!ipfsUrl) return;
+
+    const response = await fetch(ipfsUrl);
+    if (!response.ok) {
+      toast({
+        title: "Failed to fetch data",
+        description: "Failed to fetch data from IPFS",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    toast({
+      title: "Data fetched successfully",
+      description: "Data has been fetched successfully",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
+
+    const jsonData = await response.json();
+    console.log(jsonData);
+    setEncryptedData(JSON.stringify(jsonData));
+
+    setEMedicalRecords(jsonData?.medicalRecords);
+    setEFinancialRecords(jsonData?.financialRecords);
+    setEDnrRecords(jsonData?.dnrRecords);
+    setEGenomicRecords(jsonData?.genomicRecords);
+    setEMyDID(jsonData?.myDID);
   };
 
   const decryptMessage = async (record: string | undefined) => {
@@ -153,13 +178,17 @@ function ConsumerPage() {
 
       <Heading as="h2">Consume Data</Heading>
       <InputGroup as={Stack}>
-        <Text>Enter Encrypted Data:</Text>
-        <Input
+
+        <Text>Enter DATA URL</Text>
+        <Input placeholder="Data URL" value={ipfsUrl} onChange={handleIpfsUrlChange} />
+        <Button onClick={parseMessage} isDisabled={ipfsUrl?.length <= 0}>Process data</Button>
+
+        <Text>Encrypted Data:</Text>
+        <Textarea
           placeholder="Encrypted Data"
           value={encryptedData}
-          onChange={handleEncryptedDataChange}
+          readOnly
         />
-        <Button onClick={parseMessage}>Process data</Button>
       </InputGroup>
 
 
