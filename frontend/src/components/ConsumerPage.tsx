@@ -183,11 +183,11 @@ function ConsumerPage() {
 
       <Heading as="h2">Consume Data</Heading>
       <Stack spacing={4}>
-        <Text>Enter DATA URL</Text>
+        <Text fontWeight={600}>Enter Data Url:</Text>
         <Input placeholder="Data URL" value={ipfsUrl} onChange={handleIpfsUrlChange} />
         <Button w={300} colorScheme="purple" onClick={parseMessage} isDisabled={ipfsUrl?.length <= 0} >Process data</Button>
 
-        <Text>Encrypted Data:</Text>
+        <Text fontWeight={600}>Encrypted Data:</Text>
         <Textarea
           placeholder="Encrypted Data"
           value={encryptedData}
@@ -197,21 +197,21 @@ function ConsumerPage() {
 
 
       <Stack>
-        <Text >Encrypted Medical Records: </Text>
+        <Text fontWeight={600}>Encrypted Medical Records: </Text>
         <Input
           placeholder="Medical Records"
           value={eMedicalRecords}
           readOnly
         />
         <Button w={300} colorScheme="purple" onClick={decryptMedicalRecords}>Decrypt Medical Records</Button>
-        <Text >Decrypted Medical Records: </Text>
+        <Text fontWeight={600}>Decrypted Medical Records: </Text>
         {
           !decryptedMedicalRecords || decryptedMedicalRecords === "" ? "" : <JsonView src={JSON.parse(decryptedMedicalRecords)} collapsed />
         }
       </Stack>
 
       <Stack>
-        <Text >Encrypted Financial Records: </Text>
+        <Text fontWeight={600}>Encrypted Financial Records: </Text>
         <Input
           placeholder="Medical Records"
           value={eMedicalRecords}
@@ -221,14 +221,14 @@ function ConsumerPage() {
           w={300} colorScheme="purple"
           onClick={decryptFinancialRecords}
         >Decrypt Financial Records</Button>
-        <Text >Decrypted Financial Records: </Text>
+        <Text fontWeight={600}>Decrypted Financial Records: </Text>
         {
           !decryptedFinancialRecords || decryptedFinancialRecords === "" ? "" : <JsonView src={JSON.parse(decryptedFinancialRecords)} collapsed />
         }
       </Stack>
 
       <Stack>
-        <Text >Encrypted DNR Records: </Text>
+        <Text fontWeight={600}>Encrypted DNR Records: </Text>
         <Input
           placeholder="DNR Records"
           value={eDnrRecords}
@@ -238,14 +238,14 @@ function ConsumerPage() {
           w={300} colorScheme="purple"
           onClick={decryptDnrRecords}
         >Decrypt DNR Records</Button>
-        <Text >Decrypted DNR Records: </Text>
+        <Text fontWeight={600}>Decrypted DNR Records: </Text>
         {
           !decryptedDnrRecords || decryptedDnrRecords === "" ? "" : <JsonView src={JSON.parse(decryptedDnrRecords)} collapsed />
         }
       </Stack>
 
       <Stack>
-        <Text >Encrypted Genomic Records: </Text>
+        <Text fontWeight={600}>Encrypted Genomic Records: </Text>
         <Input
           placeholder="Genomic Records"
           value={eGenomicRecords}
@@ -255,14 +255,14 @@ function ConsumerPage() {
           w={300} colorScheme="purple"
           onClick={decryptGenomicRecords}
         >Decrypt Genomic Records</Button>
-        <Text >Decrypted Genomic Records: </Text>
+        <Text fontWeight={600}>Decrypted Genomic Records: </Text>
         {
           !decryptedGenomicRecords || decryptedGenomicRecords === "" ? "" : <JsonView src={JSON.parse(decryptedGenomicRecords)} collapsed />
         }
       </Stack>
 
       <Stack>
-        <Text >Encrypted De-Identified Records: </Text>
+        <Text fontWeight={600}>Encrypted De-Identified Records: </Text>
         <Input
           placeholder="MyDID"
           value={eMyDID}
@@ -272,7 +272,7 @@ function ConsumerPage() {
           w={300} colorScheme="purple"
           onClick={decryptMyDID}
         >Decrypt De-Identified Records</Button>
-        <Text >Decrypted De-Identified Records: </Text>
+        <Text fontWeight={600}>Decrypted De-Identified Records: </Text>
         {
           !decryptedMyDID || decryptedMyDID === "" ? "" : <JsonView src={JSON.parse(decryptedMyDID)} collapsed />
         }
