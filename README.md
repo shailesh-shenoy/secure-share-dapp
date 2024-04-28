@@ -38,6 +38,12 @@ We build the project with the following components
 5. The Alchemy Account abstraction SDK was used to create NFT mints for reducing transaction gas costs, for wider adoption.
 6. The intutive UI , shows both the persepecive of the data prodcuer and the data utilizer in a simpler way to explain the secure sharing of data accross societal roles.
 
+## Whats next 
+
+Extend the flexibitiy of conditionals for inter-related programs ( health equity, health financing, SDOH, clinical trial incentives more than money )
+Have the Alchemy work completed , for data utilizer subsidies of transaction gas costs. 
+Dynamic NFTs for controlling dynamic and time bound parameters. 
+
 
 ## The UI is available at 
 
