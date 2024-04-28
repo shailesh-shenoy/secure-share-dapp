@@ -5,6 +5,9 @@ import { ethers } from "ethers";
 import { hexlify } from "ethers/lib/utils";
 import { useEffect, useState } from "react";
 
+import JsonView from 'react18-json-view'
+import 'react18-json-view/src/style.css'
+
 import useTaco from "../hooks/useTaco";
 import { Button, Heading, Input, InputGroup, Stack, StackDivider, Text, Textarea } from "@chakra-ui/react";
 

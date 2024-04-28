@@ -7,15 +7,28 @@ import { useEffect, useState } from "react";
 
 import useTaco from "../hooks/useTaco";
 import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
+  Box,
   Button,
+  Code,
   Flex,
   Heading,
+  Icon,
   Input,
   InputGroup,
   Stack,
+  StackDivider,
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import FileDataViewer from "./FileDataViewer";
+import JsonView from "react18-json-view";
+import "react18-json-view/src/style.css";
+import { AttachmentIcon } from "@chakra-ui/icons";
+import { allowDnrRecordCondition, allowFinancialRecordCondition, allowGenomicRecordCondition, allowMedicalRecordCondition, allowMyDIDCondition } from "./conditions";
 
 declare const window: any;
 
@@ -68,18 +81,49 @@ function CitizenPage() {
     return <div>Loading...</div>;
   }
 
+
+
   const handleMedicalRecordsChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setMedicalRecords(e.target.value);
   };
 
+  const uploadFile = async (e: React.ChangeEvent<HTMLInputElement>, fileType: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const text = e.target?.result as string;
+      switch (fileType) {
+        case "medicalRecords":
+          setMedicalRecords(text);
+          break;
+        case "financialRecords":
+          setFinancialRecords(text);
+          break;
+        case "dnrRecords":
+          setDnrRecords(text);
+          break;
+        case "genomicRecords":
+          setGenomicRecords(text);
+          break;
+        case "myDID":
+          setMyDID(text);
+          break;
+        default:
+          break;
+      }
+    };
+    reader.readAsText(file);
+  };
+
   const encryptMessage = async () => {
-    const eMedicalData = await encryptRecord(medicalRecords);
-    const eFinData = await encryptRecord(financialRecords);
-    const eDnrData = await encryptRecord(dnrRecords);
-    const eGenData = await encryptRecord(genomicRecords);
-    const eDidData = await encryptRecord(myDID);
+    const eMedicalData = await encryptRecord(medicalRecords, "medicalRecords");
+    const eFinData = await encryptRecord(financialRecords, "financialRecords");
+    const eDnrData = await encryptRecord(dnrRecords, "dnrRecords");
+    const eGenData = await encryptRecord(genomicRecords, "genomicRecords");
+    const eDidData = await encryptRecord(myDID, "myDID");
     const edata = {
       medicalRecords: eMedicalData,
       financialRecords: eFinData,
@@ -90,27 +134,44 @@ function CitizenPage() {
     setEncryptedData(JSON.stringify(edata));
   };
 
-  const encryptRecord = async (record: string) => {
+  const encryptRecord = async (record: string, recordType: string) => {
     if (!provider) {
       return;
     }
+    let condition: conditions.condition.Condition | undefined;
+    switch (recordType) {
+      case "medicalRecords":
+        condition = allowMedicalRecordCondition;
+        break;
+      case "financialRecords":
+        condition = allowFinancialRecordCondition;
+        break;
+      case "dnrRecords":
+        condition = allowDnrRecordCondition;
+        break;
+      case "genomicRecords":
+        condition = allowGenomicRecordCondition;
+        break;
+      case "myDID":
+        condition = allowMyDIDCondition;
+        break;
+      default:
+        condition = undefined;
+        break;
+    }
+
     setEncrypting(true);
+    if (!record || !condition) {
+      setEncrypting(false);
+      return;
+    }
     try {
       const signer = provider.getSigner();
-      const hasPositiveBalance = new conditions.base.rpc.RpcCondition({
-        chain: 80002,
-        method: "eth_getBalance",
-        parameters: [":userAddress", "latest"],
-        returnValueTest: {
-          comparator: ">",
-          value: 0,
-        },
-      });
 
       console.log("Encrypting message...");
       const encryptedBytes = await encryptDataToBytes(
         record,
-        hasPositiveBalance,
+        condition,
         signer
       );
       if (encryptedBytes) {
@@ -123,56 +184,149 @@ function CitizenPage() {
   };
 
   return (
-    <Stack as="section" spacing={5}>
+    <Stack as="section" spacing={5} divider={<StackDivider color="gray.200" />}>
       <Heading as="h2">Citizen Data</Heading>
       <Flex flexDirection="column">
-        <Text>Medical Records: </Text>
-        <Input
-          placeholder="Medical Records"
-          value={medicalRecords}
-          onChange={handleMedicalRecordsChange}
-        />
+        <Text fontWeight={600}>Medical Records: </Text>
+        <Box as="label"
+          display="inline-block"
+          cursor="pointer"
+          border="1px solid"
+          borderRadius={8}
+          minW={300}
+          maxW={"max-content"}
+          px={4}
+          py={2}
+        >
+          <AttachmentIcon /> Upload Medical Records
+          <Input
+            type="file"
+            variant={"filled"}
+            display="none"
+            accept=".json"
+            name="medicalRecords"
+            onChange={(e) => uploadFile(e, "medicalRecords")}
+          />
+        </Box>
+        {
+          medicalRecords === "" ? "" : <JsonView src={JSON.parse(medicalRecords)} collapsed />
+        }
       </Flex>
       <Flex flexDirection="column">
-        <Text>Financial Records: </Text>
-        <Input
-          placeholder="Financial Records"
-          value={financialRecords}
-          onChange={(e) => setFinancialRecords(e.target.value)}
-        />
+        <Text fontWeight={600}>Financial Records: </Text>
+        <Box as="label"
+          display="inline-block"
+          cursor="pointer"
+          border="1px solid"
+          borderRadius={8}
+          minW={300}
+          maxW={"max-content"}
+          px={4}
+          py={2}
+        >
+          <AttachmentIcon /> Upload Financial Records
+          <Input
+            type="file"
+            variant={"filled"}
+            display="none"
+            accept=".json"
+            name="financialRecords"
+            onChange={(e) => uploadFile(e, "financialRecords")}
+          />
+        </Box>
+        {
+          financialRecords === "" ? "" : <JsonView src={JSON.parse(financialRecords)} collapsed />
+        }
       </Flex>
+
       <Flex flexDirection="column">
-        <Text>DNR Records: </Text>
-        <Input
-          placeholder="DNR Records"
-          value={dnrRecords}
-          onChange={(e) => setDnrRecords(e.target.value)}
-        />
+        <Text fontWeight={600}>DNR Records: </Text>
+        <Box as="label"
+          display="inline-block"
+          cursor="pointer"
+          border="1px solid"
+          minW={300}
+          borderRadius={8}
+          maxW={"max-content"}
+          px={4}
+          py={2}
+        >
+          <AttachmentIcon /> Upload DNR Records
+          <Input
+            type="file"
+            variant={"filled"}
+            display="none"
+            accept=".json"
+            name="dnrRecords"
+            onChange={(e) => uploadFile(e, "dnrRecords")}
+          />
+        </Box>
+        {
+          dnrRecords === "" ? "" : <JsonView src={JSON.parse(dnrRecords)} collapsed />
+        }
       </Flex>
+
       <Flex flexDirection="column">
-        <Text>Genomic Records: </Text>
-        <Input
-          placeholder="Genomic Records"
-          value={genomicRecords}
-          onChange={(e) => setGenomicRecords(e.target.value)}
-        />
+        <Text fontWeight={600}>Genomic Records: </Text>
+        <Box as="label"
+          display="inline-block"
+          cursor="pointer"
+          border="1px solid"
+          minW={300}
+          borderRadius={8}
+          maxW={"max-content"}
+          px={4}
+          py={2}
+        >
+          <AttachmentIcon /> Upload Genomic Records
+          <Input
+            type="file"
+            variant={"filled"}
+            display="none"
+            accept=".json"
+            name="genomicRecords"
+            onChange={(e) => uploadFile(e, "genomicRecords")}
+          />
+        </Box>
+        {
+          genomicRecords === "" ? "" : <JsonView src={JSON.parse(genomicRecords)} collapsed />
+        }
       </Flex>
+
       <Flex flexDirection="column">
-        <Text>De-Identified Records: </Text>
-        <Input
-          placeholder="My DID"
-          value={myDID}
-          onChange={(e) => setMyDID(e.target.value)}
-        />
+        <Text fontWeight={600}>My De-Identified Records: </Text>
+        <Box as="label"
+          display="inline-block"
+          cursor="pointer"
+          minW={300}
+          border="1px solid"
+          borderRadius={8}
+          maxW={"max-content"}
+          px={4}
+          py={2}
+        >
+          <AttachmentIcon /> Upload De-Identified Records
+          <Input
+            type="file"
+            variant={"filled"}
+            display="none"
+            accept=".json"
+            name="myDID"
+            onChange={(e) => uploadFile(e, "myDID")}
+          />
+        </Box>
+        {
+          myDID === "" ? "" : <JsonView src={JSON.parse(myDID)} collapsed />
+        }
+
       </Flex>
+
       <Button onClick={encryptMessage}>Encrypt</Button>{" "}
       {encrypting && "Encrypting..."}
       <Heading as="h3">Encrypted message: </Heading>
-      <Textarea
-        placeholder="Encrypted Records"
-        value={encryptedData}
-        readOnly
-      />
+      {
+        encryptedData && <JsonView src={JSON.parse(encryptedData)} collapsed />
+      }
     </Stack>
   );
 }
