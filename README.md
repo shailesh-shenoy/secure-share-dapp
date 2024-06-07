@@ -1,6 +1,7 @@
 ## Secure Social Share
 
 Devpost submission: https://devpost.com/software/secure-social-share
+
 Hackathon presentation (2 min time limit): https://www.youtube.com/watch?v=Yq1_JtYc96Q
 
 Secure Social Share is an E2E encrypted data sharing system with strict, smart contract-based access control, allowing users to securely share sensitive information with their social circle in a decentralized way. 
